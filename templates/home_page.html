@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+{% load widget_tweaks %}
+<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css'%}">
+    <script type="text/javascript" src="{% static 'js/jquery.js'%}"></script>
+    <script type="text/javascript" src="{% static 'js/jquery.min.js'%}"></script>
+
+
+</head>
+<body>
+ 
+    <div class="inputform">
+      <form id="article_form" method="POST" class="article-form">
+        {% csrf_token %}
+        <textarea name="content" id="content"></textarea>
+        <button id="button" class="btn btn-success submit" type="submit">submit</button>
+      </form> 
+    </div>
+
+<script type="text/javascript">
+  var url = "{% url 'main_url:drfapp_url:api_folder_urls:router_register_drfapp-list' %}"
+  console.log(url)
+  $(document).on('submit', "#article_form", function(e){
+  e.preventDefault();
+  var articleForm =$(this);
+  var articleFormData = new FormData(articleForm[0]);
+  $.ajax({
+    type: "POST",
+    url : url,
+    data: articleFormData,
+    async:true,
+    contentType:false,
+    processData:false,
+    cache:false,
+     success:function(data){
+      alert('success');
+
+     },
+     error:function(data){
+      alert(data);
+     }
+  });
+});
+</script>
+
+</body>
+</html>
